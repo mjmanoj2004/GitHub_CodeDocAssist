@@ -6,3 +6,11 @@ faiss-cpu            # or faiss-gpu if you have GPU support
 langchain-chroma
 langchain
 langchain-core 
+streamlit
+pydantic-ai
+langchain-community
+langchain-ollama
+faiss-cpu            # or faiss-gpu if you have GPU support
+langchain-chroma
+langchain
+langchain-core 
