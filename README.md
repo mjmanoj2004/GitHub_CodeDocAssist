@@ -30,12 +30,6 @@ It uses FAISS for vector storage, Ollama for embeddings and language model, and 
 
 ---
 
-## Demo
-
-![Chat Demo](docs/chat-demo.gif)
-
----
-
 ## Prerequisites
 
 * **Python 3.10+**
