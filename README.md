@@ -126,64 +126,63 @@ streamlit run app.py
 * **Models**: Swap out `OllamaEmbeddings` or `OpenAIModel` parameters for different model sizes or temperatures.
 * **Additional Tools**: Add more `@agent.tool` functions to perform extra tasks (e.g., code search, summary, translation).
 ---
-a. Quick setup instructions
+**a. Quick setup instructions**
 
-Install Python 3.10+ and Git.
-Install dependencies: pip install -r requirements.txt
-Ensure Ollama is running locally (for LLM/embeddings).
-Run: streamlit run gitchat_app.py
-Enter a GitHub repo URL in the sidebar and click "Load Repository" to start chatting.
+ - Install Python 3.10+ and Git.
+ - Install dependencies: pip install -r requirements.txt
+ - Ensure Ollama is running locally (for LLM/embeddings).
+ - Run: streamlit run gitchat_app.py
+ - Enter a GitHub repo URL in the sidebar and click "Load Repository" to start chatting.
 
-b. Architecture overview
-Streamlit UI for user interaction.
-GitHub repo is cloned and relevant files are extracted.
-Text is chunked and embedded using Ollama (local LLM).
-Chunks are stored in a FAISS vector database.
-User questions are answered by retrieving relevant chunks and using a PydanticAI agent (with Ollama as the LLM backend).
+**b. Architecture overview**
+  - Streamlit UI for user interaction.
+  - GitHub repo is cloned and relevant files are extracted.
+  - Text is chunked and embedded using Ollama (local LLM).
+  - Chunks are stored in a FAISS vector database.
+  - User questions are answered by retrieving relevant chunks and using a PydanticAI agent (with Ollama as the LLM backend).
 
-c. Productionization & scalability
-Containerize the app (Docker).
-Use a managed vector DB (e.g., Pinecone, Weaviate) instead of local FAISS.
-Deploy LLM/embedding model as a scalable API (e.g., on AWS Sagemaker, GCP Vertex AI, or Azure OpenAI).
-Use cloud storage for repo data.
-Add authentication, monitoring, and autoscaling.
-Deploy Streamlit or a web frontend on a managed service (e.g., AWS ECS, GCP Cloud Run).
+**c. Productionization & scalability**
+  - Containerize the app (Docker).
+  - Use a managed vector DB (e.g., Pinecone, Weaviate) instead of local FAISS.
+  - Deploy LLM/embedding model as a scalable API (e.g., on AWS Sagemaker, GCP Vertex AI, or Azure OpenAI).
+  - Use cloud storage for repo data.
+   - Add authentication, monitoring, and autoscaling.
+   - Deploy Streamlit or a web frontend on a managed service (e.g., AWS ECS, GCP Cloud Run).
 
-d. RAG/LLM approach & decisions
-Retrieval-Augmented Generation (RAG) is used: user queries retrieve top-k relevant code/doc chunks via FAISS, then LLM generates answers.
-LLM: Ollama (local, open-source, model: llama3.2).
-Embeddings: Ollama all-minilm:33m.
-Vector DB: FAISS (local, for demo; would use managed DB in prod).
-Orchestration: PydanticAI agent wraps retrieval and LLM.
-Prompt: System prompt enforces grounding in repo content, concise answers, and citation of files/snippets.
-Guardrails: Prompt-based (no code execution, factuality emphasis).
-Observability: Minimal in demo; would add logging, tracing, and analytics in production.
+**d. RAG/LLM approach & decisions**
+  - Retrieval-Augmented Generation (RAG) is used: user queries retrieve top-k relevant code/doc chunks via FAISS, then LLM generates answers.
+  - LLM: Ollama (local, open-source, model: llama3.2).
+ -  Embeddings: Ollama all-minilm:33m.
+  - Vector DB: FAISS (local, for demo; would use managed DB in prod).
+  - Orchestration: PydanticAI agent wraps retrieval and LLM.
+  - Prompt: System prompt enforces grounding in repo content, concise answers, and citation of files/snippets.
+  - Guardrails: Prompt-based (no code execution, factuality emphasis).
+  - Observability: Minimal in demo; would add logging, tracing, and analytics in production.
 
-e. Key technical decisions
-Chose local LLM/embeddings for privacy and cost.
-Used FAISS for simplicity and speed in local/dev.
-Streamlit for rapid prototyping and UI.
-PydanticAI agent for modular, tool-augmented LLM interaction.
-Focused on extensibility (easy to swap vector DB, LLM, or UI).
+**e. Key technical decisions**
+- Chose local LLM/embeddings for privacy and cost.
+- Used FAISS for simplicity and speed in local/dev.
+- Streamlit for rapid prototyping and UI.
+- PydanticAI agent for modular, tool-augmented LLM interaction.
+- Focused on extensibility (easy to swap vector DB, LLM, or UI).
 
-f. Engineering standards
-Modular code (functions for each step).
-Type hints and docstrings.
-Error handling for repo cloning and file reading.
-Used open-source, well-maintained libraries.
-Skipped: full test coverage, CI/CD, advanced logging, and security hardening (for demo).
+**f. Engineering standards**
+-   Modular code (functions for each step).
+-   Type hints and docstrings.
+ -  Error handling for repo cloning and file reading.
+ -  Used open-source, well-maintained libraries.
+-   Skipped: full test coverage, CI/CD, advanced logging, and security hardening (for demo).
 
-g. Use of AI tools in development
-Used LLMs (like Copilot) for code generation, refactoring, and docstring writing.
-Used AI for brainstorming architecture and prompt design.
-Validated code and prompts iteratively with LLM feedback.
+**g. Use of AI tools in development**
+-   Used LLMs (like Copilot) for code generation, refactoring, and docstring writing.
+ -  Used AI for brainstorming architecture and prompt design.
+-   Validated code and prompts iteratively with LLM feedback.
 
-h. What I'd do differently with more time
-Add tests and CI/CD.
-Support more file types and larger repos (streaming, async).
-Add user authentication and rate limiting.
-Improve UI/UX (file tree, code highlighting, chat history).
-Add analytics and observability.
-Support multi-LLM backends and cloud deployment out of the box.
+**h. What I'd do differently with more time**
+-  Support more file types and larger repos (streaming, async).
+ -  Add user authentication and rate limiting.
+ -  Improve UI/UX (file tree, code highlighting, chat history).
+-  Add analytics and observability.
+ -  Support multi-LLM backends and cloud deployment out of the box.
 
 
